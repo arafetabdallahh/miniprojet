@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<head>
+	<meta charset="utf-8">
+	<title>Ajout des Produits</title>
+</head>
+
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container mt-5">
+			<div class="card">
+				<div class="card-header" th:if="${mode=='new'}"> Ajout des Anime </div>
+				<div class="card-header" th:if="${mode=='edit'}">Modification des Anime
+				</div>
+				<div class="card-body">
+					<form th:action="@{saveAnime}" method="post">
+					<div class="form-group">
+						
+							<input type="text" hidden name="idAnime" class="form-control" th:value="${anime.idAnime}" />
+							<span th:errors=${anime.idAnime} class="text-danger"> </span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Nom Anime :</label>
+							<input type="text" name="nomAnime" class="form-control" th:value="${anime.nomAnime}" />
+							<span th:errors=${anime.nomAnime} class="text-danger"> </span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Episode Anime :</label>
+							<input type="text" name="episodeAnime" class="form-control" th:value="${anime.episodeAnime}" />
+							<span th:errors=${anime.episodeAnime} class="text-danger"> </span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">date création :</label>
+							<input type="date" name="dateCreation" class="form-control" th:value="${anime.dateCreation}"/>
+							<span th:errors=${anime.dateCreation} class="text-danger"> </span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Genre :</label>
+							<select name="genre" class="form-control">
+								<option th:each="g:${genre}" th:if="${mode=='new'}" th:value="${g.idCat}"th:text="${g.nomCat}"></option>
+								<option th:each="g : ${genre}" th:if="${mode=='edit'}" th:value="${g.idCat}"th:text="${g.nomCat}" th:selected="${ g.idCat==anime.genre.idCat}"></option>
+
+							</select>
+						</div>
+						<div>
+							<button type="submit" class="btn btn-primary">Valider</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

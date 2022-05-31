@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="template" xmlns:sec=https://www.thymeleaf.org/thymeleaf-extras-springsecurity5>
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Liste des Utilisateures</title>
+</head>
+<body>
+<div layout:fragment ="Mycontent">
+<div class="container mt-5">
+<div class="card" style="width: 1000px;">
+ <div class="card-header">
+ Liste des Utilisateures
+</div>
+ <div class="card-body" >
+ <table class="table table-striped">
+ <tr>
+ <th>ID</th><th>Nom Utilisateur</th><th>Mot de passe crypté</th> <th> Role </th><th sec:authorize="hasRole('admin')"  >Modifier</th>
+ <th sec:authorize="hasRole('admin')"  >Supprimer</th>
+ </tr> 
+ <tr th:each="u:${user.content}">
+ <td th:text="${u.user_id}"></td>
+ <td th:text="${u.username}"></td>
+ <td th:text="${u.password}"></td>  
+ <td><span th:each="r : ${u.roles}" th:text="${r.role}+' '"></span></td>
+ <td ><a class="btn btn-success" sec:authorize="hasRole('admin')" th:href="@{modifierUser(id=${u.user_id})}">Editer</a></td>
+ <td ><a class="btn btn-danger"  sec:authorize="hasRole('admin')" onclick="return confirm('Etes-vous sûr ?')" th:href="@{supprimerUser(id=${u.user_id}, page=${currentPage},size=${size})}">Supprimer</a>
+
+</tr> 
+</table>
+ 
+ <ul class="nav nav-pills">
+ <li th:each="page,status:${pages}">
+ <a th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+ th:href="@{ListeUsers(page=${status.index}, size=${size} ) }"
+ th:text="${status.index }"></a>
+ </li>
+ </ul>
+ </div>
+</div>
+</div>
+</div>
+</body>
+</html>

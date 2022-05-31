@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<head>
+	<meta charset="utf-8">
+	<title>Formulaire des genre</title>
+
+</head>
+
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container mt-5">
+			<div class="card">
+				<div class="card-header" th:if="${mode=='new'}"> Ajout des Genre </div>
+				<div class="card-header" th:if="${mode=='edit'}">Modification des Genre</div>
+				<div class="card-body">
+					<form th:action="@{saveGenre}" method="post">
+						<div class="form-group">
+							<label class="control-label" hidden>ID Genre :</label>
+							<input type="text"  hidden name="idCat" class="form-control" th:value="${genre.idCat}" />
+						</div>
+						<div class="form-group">
+							<label class="control-label">Nom Genre :</label>
+							<input type="text" name="nomCat" class="form-control" th:value="${genre.nomCat}" />
+						</div>
+						
+						<div>
+							<button type="submit" class="btn btn-primary" th:if="${mode=='new'}">Ajouter</button>
+							<button type="submit" class="btn btn-primary" th:if="${mode=='edit'}">Modifier</button>
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
